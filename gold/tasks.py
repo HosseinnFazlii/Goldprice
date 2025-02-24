@@ -19,7 +19,7 @@ def extract_gold_prices(html):
     soup = BeautifulSoup(html, "html.parser")
     target_titles = {
         "هرگرم طلای 18 عیار": "price-5",
-        "هرگرم(طلای آب شده18عیار)": "price-13",
+        "هرگرم(طلای آب شده18عیار)": "price-6",
         
     }
     
@@ -68,7 +68,7 @@ def generate_telegram_message(prices):
         "هرگرم طلای آب شده18عیار": "طلای آب شده",  # In case extracted differently
     }
 
-    message = f"🕰 ساعت: <b>{now}</b> 🏺\n\n"
+    message = f"🕰 ساعت: <b>{tehran_time}</b> 🏺\n\n"
 
     for original_title, price in prices.items():
         # Use mapped title or fallback to the original if no match is found
@@ -107,7 +107,7 @@ def send_telegram_message(message):
         logging.error(f"Exception in send_telegram_message: {e}")
 
 
-""""import html
+import html
 import requests
 import logging
 import pytz
@@ -123,11 +123,11 @@ TELEGRAM_BOT_TOKEN = config("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = config("TELEGRAM_CHAT_ID")  # Use the channel chat ID (-100xxxxxxxxxx)
 
 def extract_gold_prices(html_content):
-    """"Extracts gold prices from the website HTML."""""
+    """Extracts gold prices from the website HTML."""
     soup = BeautifulSoup(html_content, "html.parser")
     target_titles = {
        "هرگرم طلای 18 عیار": "price-5",
-       "هرگرم(طلای آب شده18عیار)": "price-13",
+       "هرگرم(طلای آب شده18عیار)": "price-6",
     }
     
     prices = {}
@@ -164,15 +164,15 @@ def fetch_and_save_gold_prices():
         logging.error(f"Exception in fetch_and_save_gold_prices: {e}")
         
 def generate_telegram_message(prices):
-    """"Generates a properly formatted Telegram message with corrected titles.""""
+    """Generates a properly formatted Telegram message with corrected titles."""
     tehran_tz = pytz.timezone("Asia/Tehran")
     tehran_time = now().astimezone(tehran_tz).strftime("%H:%M")  # Show only time (HH:MM)
 
     # Title mapping (Website title → Telegram title)
     title_mapping = {
         "هرگرم طلای 18 عیار": "طلای ۱۸ عیار",
-        "هرگرم(طلای آب شده18عیار)": "طلای آب شده",
-        "هرگرم طلای آب شده18عیار": "طلای آب شده",
+        "هرگرم(طلای آب شده18عیار)": "طلای آب شده",  # Fixing this issue
+        "هرگرم طلای آب شده18عیار": "طلای آب شده",  # In case extracted differently
     }
 
     # Fix formatting
@@ -191,7 +191,7 @@ def generate_telegram_message(prices):
     return message
 
 def send_telegram_message(message):
-    """"Sends the gold price update to the Telegram channel with justified text.""""
+    """Sends the gold price update to the Telegram channel with justified text."""
     telegram_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
 
     payload = {
@@ -207,4 +207,3 @@ def send_telegram_message(message):
             logging.error(f"Telegram API error: {result.text}")
     except Exception as e:
         logging.error(f"Exception in send_telegram_message: {e}")
-"""
