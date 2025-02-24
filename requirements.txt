@@ -22,3 +22,4 @@ django-rest-framework
 python-telegram-bot
 python-decouple
 bs4
+pytz

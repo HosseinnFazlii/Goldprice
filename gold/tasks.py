@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup
 from django.utils import timezone
 from decouple import config
 from .models import GoldPrice
+import pytz
+from datetime import datetime
+from django.utils.timezone import now
 
 # Load environment variables from .env
 TELEGRAM_BOT_TOKEN = config("TELEGRAM_BOT_TOKEN")
@@ -55,7 +58,8 @@ def fetch_and_save_gold_prices():
         
 def generate_telegram_message(prices):
     """Generates a properly formatted Telegram message with corrected titles."""
-    now = timezone.now().strftime("%H:%M")
+    tehran_tz = pytz.timezone("Asia/Tehran")
+    tehran_time = now().astimezone(tehran_tz).strftime("%H:%M")
 
     # Title mapping (Website title → Telegram title)
     title_mapping = {
