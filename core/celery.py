@@ -18,4 +18,8 @@ app.conf.beat_schedule = {
         "task": "gold.tasks.fetch_and_save_gold_prices",
         "schedule": 60.0,  # Every 1 hour (in seconds)
     },
+    "fetch-usd-price-every-hour": {
+        "task": "dollor.tasks.fetch_and_save_usd_price",  # Make sure this path matches your app and task name
+        "schedule": 60.0,  # Every 1 hour
+    },
 }
