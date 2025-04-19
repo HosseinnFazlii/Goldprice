@@ -113,5 +113,3 @@ def send_telegram_message(message):
             logging.error(f"Telegram API error: {result.text}")
     except Exception as e:
         logging.error(f"Exception in send_telegram_message: {e}")
-
-
